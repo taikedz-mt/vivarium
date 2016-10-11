@@ -19,7 +19,7 @@ local capturedef = function(def)
 	local capturing = function(self,clicker)
 
 		if mobs:feed_tame(self, clicker, feedcount, true, true) then
-			return
+			return false
 		end
 		mobs:capture_mob(self, clicker, handchance, netchance, lassochance, override, replacement)
 	end
@@ -111,7 +111,7 @@ processanimals("mobs_yeti",{"yeti"})
 processanimals("mobs_horse",{"horse"},{hp_max=40,armor=100})
 processanimals("mobs_slimes",{"green_small","green_medium","green_big","lava_small","lava_medium","lava_big"},{follow="mobs_slimes:slimeball"})
 processanimals("mobs_sandworm",{"sandworm"},{follow="default:sandstone"})
-processanimals("mobs_senderman",{"senderman"},{follow="default:nyan"},{hp_max=50})
+processanimals("mobs_senderman",{"senderman"},{follow="default:nyan"},{hp_max=50,light_damage=0})
 processanimals("mobs_creeper",{"creeper"},{follow={value={"default:coal_lump","basic_machines:charcoal"}}})
 processanimals("mobs_zombie",{"zombie","zombie_mini"},{follow="mobs_zombie:rotten_flesh"})
 processanimals("mobs_monster",{"dirt_monster"},{follow="default:dirt"})
@@ -125,6 +125,17 @@ processanimals("mobs_monster",{"dungeon_master"},{follow="default:mese_crystal_f
 processanimals("mobs_monster",{"tree_monster"},{follow="group:wood"})
 processanimals("dmobs",{"whale"},cattables({fighttable,{follow="mobs_bugslive:bug"} }))
 processanimals("dmobs",{"gnorm","pig"},cattables({fighttable,{follow="default:apple"}}))
+processanimals("dmobs",{"treeman"},{follow="default:dirt"})
+processanimals("dmobs",{"golem"},{follow="default:torch"})
+processanimals("dmobs",{"skeleton"},{follow="bones:bones"})
+processanimals("dmobs",{"nyan"},{
+	type="npc",
+	damage=3,
+	attacks_monsters=true,
+	attack_type="dogfight",
+	passive=false,
+	follow="default:apple"
+} )
 processanimals("dmobs",{"pig_evil"},{follow="mobs:pork_raw"})
 
 override.rewrite("dmobs:pig",{drops={value={ {name = "mobs:pork_raw", chance = 1, min = 1, max = 1}, }}})
@@ -178,7 +189,7 @@ end
 
 override.rewrite("mobs_animal:bunny",{
 	on_rightclick = {
-		fchain_type = "after",
+		fchain_type = "before",
 		fchain_func = function(self,clicker)
 			local item = clicker:get_wielded_item()
 			if item:get_name() == "mobs:lava_orb" then -- these settings will make for a better battle
@@ -193,7 +204,9 @@ override.rewrite("mobs_animal:bunny",{
 					item:take_item()
 					clicker:set_wielded_item(item)
 				end
+				return false
 			end
+			return true
 		end
 	}
 })
