@@ -137,6 +137,9 @@ processanimals("dmobs",{"nyan"},{
 	follow="default:apple"
 } )
 processanimals("dmobs",{"pig_evil"},{follow="mobs:pork_raw"})
+processanimals("dmobs",{"golem","golem_friendly"},{follow="default:stone"})
+processanimals("dmobs",{"skeleton"},{follow="ethereal:bone"})
+processanimals("dmobs",{"treeman"},{follow="default:dirt"})
 
 override.rewrite("dmobs:pig",{drops={value={ {name = "mobs:pork_raw", chance = 1, min = 1, max = 1}, }}})
 override.rewrite("dmobs:pig_evil",{drops={value={ {name = "mobs:pork_raw", chance = 1, min = 2, max = 3}, }}})
