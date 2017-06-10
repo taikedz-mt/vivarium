@@ -9,13 +9,13 @@ minetest.register_node("fallinglight:falling_light", {
 	light_source = 14,
 	light_propagates = true,
 	sunlight_propagates = true,
-	tiles = {"default_sand.png"},
+	tiles = {"default_dirt.png"},
 	groups = {crumbly = 3, falling_node = 1},
 })
 
 minetest.register_craft ({
         output = "fallinglight:falling_light",
 	type = "shapeless",
-        recipe = {"group:sand","default:torch"}
+        recipe = {"group:dirt","default:torch"}
 }
 )
