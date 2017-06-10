@@ -117,6 +117,7 @@ function staffmagic:countpower(user,staff)
 		if x:get_name() == powerup then
 			local count = x:get_count()
 			if count > 100 then count = 100 end
+			local factor = 1
 			return math.floor(count/10)
 		end
 	end
@@ -378,7 +379,11 @@ minetest.register_tool("staffmagic:staff_boom", {
 		if not staffmagic:staffcheck(user,"staffer") then return end
 
 		local radius = 1
-		radius = radius + staffmagic:countpower(user,"boom")
+		local factor = 1
+		if minetest.setting_getbool("creative_mode") then
+			factor = 2
+		end
+		radius = factor * (radius + staffmagic:countpower(user,"boom") )
 
 		if pointed_thing.type ~= "node" then
 			if not pointed_thing.ref then return end
