@@ -24,7 +24,7 @@ local reload = function()
 	formspeccer:add_textarea(fsn,{
 		xy="1,1",
 		wh="19,8",
-		name="announce",
+		name="", -- empty, to make it readonly
 		label="Welcome!",
 		value=an_data,
 	})
@@ -52,9 +52,10 @@ minetest.register_chatcommand("announcement",{
 })
 
 minetest.register_on_joinplayer(function(player)
-	if mdisplay then
-	minetest.after(0.5,function(...)
-		formspeccer:show(player,fsn )
-	end)
+	if mdisplay and player:get_hp() > 0 then
+        -- Displaying when dead causes respawn dialog to disappear.
+        minetest.after(0.5,function(...)
+            formspeccer:show(player,fsn )
+        end)
 	end
 end)
